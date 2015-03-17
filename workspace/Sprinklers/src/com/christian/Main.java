@@ -1,11 +1,11 @@
 package com.christian;
-import java.awt.BorderLayout;
+
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import java.io.IOException;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,15 +17,24 @@ public class Main {
 	
 	JPanel window;
 	JTextField display;
-	JButton send;
+	JButton send;	
 	JPanel p1;
-	Main(){
+	
+	
+	
+	Main(Networking net){
 		window = new JPanel();
-		BorderLayout bl = new BorderLayout();
+		
 		display = new JTextField(30);
 		window.add("North", display);
 		send = new JButton("send");
-		SprinklerEngine engine = new SprinklerEngine(parent);
+		
+		
+		
+		SprinklerEngine engine = new SprinklerEngine(this,net);
+		
+		
+		display.setText("Command:");
 		
 		send.addActionListener(engine);
 		
@@ -39,7 +48,7 @@ public class Main {
 		
 		window.add("Center",p1);
 		
-		JFrame frame = new JFrame("Sprinklers");
+		JFrame frame = new JFrame("Christian's Sprinkler Pi Program!");
 		frame.setContentPane(window);
 		
 		frame.pack();
@@ -51,9 +60,25 @@ public class Main {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Main calc = new Main();
-		System.out.println("derp");
+		
+		try {
+			Networking net = new Networking("localhost", 42001);
+			Main main = new Main(net);
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Oh noes! IOException: "+e);
+		}
+	
+	}
+	
+	
+	public String getText(){
+		System.out.println(display.getText());
+		return display.getText();
+		
 	}
 
-	
+
 }

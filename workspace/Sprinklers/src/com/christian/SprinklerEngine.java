@@ -8,16 +8,29 @@ import javax.swing.JButton;
 public class SprinklerEngine implements ActionListener{
 	
 	Main parent;
+	Networking net;
 	
-	SprinklerEngine(Main parent){
+	SprinklerEngine(Main parent, Networking net){
 		this.parent = parent;
+		System.out.println(parent);
+		this.net = net;
+		System.out.println("xonstructed");
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		 
-		 JButton clickedBytton = (JButton) e.getSource();
+		 JButton clickedButton = (JButton) e.getSource();
 		 
-		 System.out.println("test");
+		 if (clickedButton == parent.send){
+			 net.send(parent.getText());
+		 }
+		 
+		
+		 
+		 
+			
+		 
+		 
 		 
 		 /*Object src = e.getSource();
 		 System.out.println("derp");
