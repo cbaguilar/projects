@@ -2,6 +2,7 @@ package com.christian;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 
@@ -10,19 +11,38 @@ public class SprinklerEngine implements ActionListener{
 	Main parent;
 	Networking net;
 	
-	SprinklerEngine(Main parent, Networking net){
+	SprinklerEngine(Main parent){
 		this.parent = parent;
 		System.out.println(parent);
-		this.net = net;
 		System.out.println("xonstructed");
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		 
-		 JButton clickedButton = (JButton) e.getSource();
+		 JButton clicked = (JButton) e.getSource();
 		 
-		 if (clickedButton == parent.send){
+		 if (clicked == parent.send){
+			
 			 net.send(parent.getText());
+			
+		 }
+		 
+		 if(clicked == parent.disconnect){
+			 net.close();
+			 net = null;
+			 parent.setConnStatus(" Not Connected");
+		 }
+		 
+		 if (clicked == parent.connect){
+			 try {
+				net = new Networking(parent.getAddress(),Integer.parseInt(parent.getPort()));
+				parent.setConnStatus(" Connected");
+			} catch (IOException e1) {
+				parent.setConnStatus(" Could not connect");
+				// TODO Auto-generated catch block
+				System.out.println("O noes! something went wrong connecting to the server!"
+						+ "\n IOException"+e1);
+			}
 		 }
 		 
 		

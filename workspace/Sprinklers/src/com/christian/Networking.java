@@ -70,13 +70,17 @@ public class Networking {
 
 	public String receive() throws IOException{
 		
-		
-			String receive = inbound.readLine();
-			
-			
-			return receive;
-		
-		
+			String receive = inbound.readLine();	
+			return receive;	
+	}
+	
+	public void close(){
+		try {
+			client.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("could not close:"+ e );
+		}
 	}
 	
 	

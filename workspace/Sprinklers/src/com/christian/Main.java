@@ -1,52 +1,78 @@
 package com.christian;
 
-import java.awt.GridLayout;
 
-import java.io.IOException;
 
+
+
+
+
+
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 //import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+//main sprinkler class, includes GUI.
+
 
 public class Main {
 
 	Main parent;
 	
 	
+	JLabel connStatus;
 	JPanel window;
-	JTextField display;
-	JButton send;	
-	JPanel p1;
+	JPanel connectInfo;
+	JTextField custInput,address,port;
+	JButton send,connect,disconnect;
+	JPanel customMessage,connInfo;
 	
 	
 	
-	Main(Networking net){
+	Main(){
+		SprinklerEngine engine = new SprinklerEngine(this);
+		
 		window = new JPanel();
+		connInfo = new JPanel();
+		customMessage = new JPanel();
 		
-		display = new JTextField(30);
-		window.add("North", display);
-		send = new JButton("send");
+		connStatus = new JLabel(" Not Connected");
 		
+		custInput = new JTextField(30);
+		address = new JTextField(10);
+		port = new JTextField(5);
+		custInput.setText("Command:");
+		address.setText("192.168.2.8");
+		port.setText("42001");
 		
-		
-		SprinklerEngine engine = new SprinklerEngine(this,net);
-		
-		
-		display.setText("Command:");
+		send = new JButton("Send");
+		connect = new JButton("Connect");
+		disconnect = new JButton("Disconnect");
 		
 		send.addActionListener(engine);
+		connect.addActionListener(engine);
+		disconnect.addActionListener(engine);
 		
-		p1 = new JPanel();
+		BoxLayout box = new BoxLayout(window, 1);
+		/*GridLayout gl2 = new GridLayout();
+		customMessage.setLayout(gl);
+		connInfo.setLayout(gl);*/
+		window.setLayout(box);
 		
-		GridLayout gl = new GridLayout();
-		p1.setLayout(gl);
+		connInfo.add(address);
+		connInfo.add(port);
+		connInfo.add(connect);
+		connInfo.add(disconnect);
+		connInfo.add(connStatus);
 		
+		customMessage.add(custInput);
+		customMessage.add(send);
 		
-		p1.add(send);
-		
-		window.add("Center",p1);
+		window.add(connInfo);
+		window.add(customMessage);
 		
 		JFrame frame = new JFrame("Christian's Sprinkler Pi Program!");
 		frame.setContentPane(window);
@@ -61,23 +87,28 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		try {
-			Networking net = new Networking("localhost", 42001);
-			Main main = new Main(net);
-			
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Oh noes! IOException: "+e);
-		}
+		@SuppressWarnings("unused")
+		Main main = new Main();
 	
 	}
 	
 	
 	public String getText(){
-		System.out.println(display.getText());
-		return display.getText();
+		System.out.println(custInput.getText());
+		return custInput.getText();
 		
+	}
+	
+	public void setConnStatus(String status){
+		connStatus.setText(status);
+	}
+	
+	public String getAddress(){
+		return address.getText();
+	}
+	
+	public String getPort(){
+		return port.getText();
 	}
 
 
