@@ -7,13 +7,18 @@ package com.christian;
 
 
 
+import java.util.ArrayList;
+
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 //import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 //main sprinkler class, includes GUI.
 
@@ -23,13 +28,34 @@ public class Main {
 	Main parent;
 	
 	
-	JLabel connStatus;
+	JLabel connStatus,output,enabled;
 	JPanel window;
-	JPanel connectInfo;
+	JPanel connectInfo,outputPan;
+	JPanel sprinklerList;
+	
+		JLabel	l1,l2,l3,l4,l5,l6,
+			  	l7,l8,l9,l10,l11,l12;
+		
+		JTextField 	t1,t2,t3,t4,t5,t6,
+					t7,t8,t9,t10,t11,t12;
+		
+		JLabel 	e1,e2,e3,e4,e5,e6,
+				e7,e8,e9,e10,e11,e12;
+		
+		JRadioButton r1,r2,r3,r4,r5,r6,
+					 r7,r8,r9,r10,r11,r12;
+		
+	
 	JTextField custInput,address,port;
 	JButton send,connect,disconnect;
-	JPanel customMessage,connInfo;
+	JPanel customMessage,connInfo,programbox;
+	JComboBox<String[]> programs;
+	JRadioButton enabledProgram;
 	
+	ArrayList<JLabel> asprinklers;
+	
+	String[] programsList = {"Summer","Winter","number2"};
+
 	
 	
 	Main(){
@@ -37,9 +63,18 @@ public class Main {
 		
 		window = new JPanel();
 		connInfo = new JPanel();
-		customMessage = new JPanel();
+		customMessage = new JPanel();	
+		programbox = new JPanel();
+		sprinklerList = new JPanel();
+		outputPan = new JPanel();
 		
 		connStatus = new JLabel(" Not Connected");
+		output = new JLabel("System Output: ",SwingConstants.LEFT);
+		enabled = new JLabel(" Enabled");
+		
+		programs = new JComboBox(programsList);
+		
+		enabledProgram = new JRadioButton();
 		
 		custInput = new JTextField(30);
 		address = new JTextField(10);
@@ -56,11 +91,22 @@ public class Main {
 		connect.addActionListener(engine);
 		disconnect.addActionListener(engine);
 		
+		asprinklers = new ArrayList<JLabel>();
+		
+			for (int i = 0;i < 12;i++){
+				//JLabel j = new JLabel("Sprinkler "+i);
+				asprinklers.add(new JLabel("Sprinkler "+(i+1)));
+				
+				sprinklerList.add(asprinklers.get(i));
+			}
+		
 		BoxLayout box = new BoxLayout(window, 1);
 		/*GridLayout gl2 = new GridLayout();
 		customMessage.setLayout(gl);
 		connInfo.setLayout(gl);*/
 		window.setLayout(box);
+		sprinklerList.setLayout(new BoxLayout(sprinklerList,1));
+		
 		
 		connInfo.add(address);
 		connInfo.add(port);
@@ -68,10 +114,19 @@ public class Main {
 		connInfo.add(disconnect);
 		connInfo.add(connStatus);
 		
+		programbox.add(programs);
+		programbox.add(enabled);
+		programbox.add(enabledProgram);
+		
+		outputPan.add(output);
+		
 		customMessage.add(custInput);
 		customMessage.add(send);
 		
 		window.add(connInfo);
+		window.add(programbox);
+		window.add(sprinklerList);
+		window.add(outputPan);
 		window.add(customMessage);
 		
 		JFrame frame = new JFrame("Christian's Sprinkler Pi Program!");
@@ -85,7 +140,7 @@ public class Main {
 		
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 		
 		@SuppressWarnings("unused")
 		Main main = new Main();
@@ -111,5 +166,8 @@ public class Main {
 		return port.getText();
 	}
 
+	public void write(String out){
+		output.setText(out);
+	}
 
 }

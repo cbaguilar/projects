@@ -23,8 +23,15 @@ public class SprinklerEngine implements ActionListener{
 		 
 		 if (clicked == parent.send){
 			
+			 try{
 			 net.send(parent.getText());
-			
+			 }
+			 catch (IOException e5){
+				 System.out.println("Could not send: "+e5);
+			 }
+			 catch (NullPointerException npe1){
+				 System.out.println("Not connected: "+npe1);
+			 }
 		 }
 		 
 		 if(clicked == parent.disconnect){

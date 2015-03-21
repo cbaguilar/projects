@@ -45,8 +45,8 @@ public class Networking {
   
     }  
     
-    public void send(String data){
-       try { // write message size, then the message 
+    public void send(String data) throws IOException{
+       // write message size, then the message 
            // byte[] sizeBytes = intToByteArray( data.length() ); 
             //for (int i = 0; i < 4; i++)
          //   {
@@ -55,20 +55,10 @@ public class Networking {
             //}
             out.write(data.getBytes());
             out.write("end".getBytes());
-            System.out.println("derp");
-           
-            } 
-            catch (IOException e) { 
-            System.err.println("Couldn't send: " + data); 
-             
-            }
-        
-       
- 
-	   
-   }
+            System.out.println("derp");   
+    }
 
-	public String receive() throws IOException{
+	public String receive() throws IOException, NullPointerException{
 		
 			String receive = inbound.readLine();	
 			return receive;	
@@ -78,7 +68,7 @@ public class Networking {
 		try {
 			client.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			System.out.println("could not close:"+ e );
 		}
 	}
