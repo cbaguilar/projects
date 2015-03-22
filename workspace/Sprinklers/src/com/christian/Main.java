@@ -12,7 +12,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
 //main sprinkler class, includes GUI.
@@ -25,7 +27,7 @@ public class Main {
 	 * I may remove the declaration for the sprinkler radio buttons/list*/
 	//test
 	JLabel connStatus,output,enabled;
-	JPanel window;
+	JPanel programSprinklers,directControl;
 	JPanel connectInfo,outputPan;
 	JPanel sprinklerList,map;
 	/*
@@ -42,17 +44,21 @@ public class Main {
 					 r7,r8,r9,r10,r11,r12;
 		
 	*/
-	JTextField custInput,address,port;
-	JButton send,connect,disconnect;
+	JTextField custInput,address,port,time;
+	JButton send,connect,disconnect,update;
 	JPanel customMessage,connInfo,programbox;
 	JComboBox<String[]> programs;
 	JRadioButton enabledProgram;
+	JTabbedPane tabs;
 	
 	ArrayList<JLabel> asprinklers;
 	ArrayList<JTextField> asprinklerTime;
 	ArrayList<JRadioButton> asprinklerEnabled;
 	ArrayList<JPanel> asprinklerPanel;
 	
+	ArrayList<JLabel> conSprinklers;
+	ArrayList<JToggleButton> conToggle;
+
 	
 	String[] programsList = {"Summer","Winter","number2"};
 	String[] sprinkLabels = { 	"One",
@@ -71,16 +77,38 @@ public class Main {
 	
 	
 	Main(){
+		tabs = new JTabbedPane();
+		
+
+		
 		ImageIcon icon = new ImageIcon("src/res/house2.png");
 		
 		SprinklerEngine engine = new SprinklerEngine(this);
 		
-		window = new JPanel();
+		directControl = new JPanel();
+		programSprinklers = new JPanel();
 		connInfo = new JPanel();
 		customMessage = new JPanel();	
 		programbox = new JPanel();
 		sprinklerList = new JPanel();
 		outputPan = new JPanel();
+		
+		JPanel help = new JPanel();
+		help.setLayout(new GridLayout());
+		/*help.add(new JLabel("Help:\n"
+							+ "\n\n"
+							+ "To configure a sprinkler program, simply select one from the "
+							+ "menu and set the times for each sprinkler (in minutes)."
+							+ "\n\nErrors:\n\n"
+							+ "Most errors you would encounter would be due to connection issues."
+							+ " If you get a 'no route to host' error, either your computer"
+							+ "or the Raspberry Pi is not connected to the network,"
+							+ " or the address is incorrect. "));
+		*/
+		tabs.addTab("Program", programSprinklers);
+		tabs.addTab("Direct Control",directControl);
+		tabs.addTab("Help",help);
+		
 		
 		connStatus = new JLabel(" Not Connected");
 		output = new JLabel("System Output: ",SwingConstants.LEFT);
@@ -92,18 +120,22 @@ public class Main {
 		
 		custInput = new JTextField(30);
 		address = new JTextField(10);
+		time = new JTextField(1);
 		port = new JTextField(5);
 		custInput.setText("Command:");
 		address.setText("192.168.2.8");
 		port.setText("42001");
 		
+		
 		send = new JButton("Send");
 		connect = new JButton("Connect");
 		disconnect = new JButton("Disconnect");
+		update = new JButton("UPDATE");
 		
 		send.addActionListener(engine);
 		connect.addActionListener(engine);
 		disconnect.addActionListener(engine);
+		update.addActionListener(engine);
 		
 		asprinklers = new ArrayList<JLabel>();
 		asprinklerTime = new ArrayList<JTextField>();
@@ -123,13 +155,15 @@ public class Main {
 				
 				asprinklerPanel.get(i).add(asprinklers.get(i));
 				asprinklerPanel.get(i).add(asprinklerTime.get(i));
-				asprinklerPanel.get(i).add(asprinklerEnabled.get(i));
+				//asprinklerPanel.get(i).add(asprinklerEnabled.get(i));
 				
 				
 				
 				
 				sprinklerList.add(asprinklerPanel.get(i));
 			}
+			
+			
 			
 			
 		map = new JPanel();
@@ -139,11 +173,11 @@ public class Main {
 		map.add(new JLabel(icon));
 		
 		
-		BoxLayout box = new BoxLayout(window, 1);
+		BoxLayout box = new BoxLayout(programSprinklers, 1);
 		/*GridLayout gl2 = new GridLayout();
 		customMessage.setLayout(gl);
 		connInfo.setLayout(gl);*/
-		window.setLayout(box);
+		programSprinklers.setLayout(box);
 		sprinklerList.setLayout(new BoxLayout(sprinklerList,1));
 		
 		outputPan.setLayout(new GridLayout());
@@ -158,20 +192,27 @@ public class Main {
 		programbox.add(programs);
 		programbox.add(enabled);
 		programbox.add(enabledProgram);
+		programbox.add(new JLabel(" Time (24 hr format) "));
+		programbox.add(time);
+		programbox.add(new JLabel(":00  "));
+		programbox.add(update);
 		
 		outputPan.add(output);
 		
 		customMessage.add(custInput);
 		customMessage.add(send);
 		
-		window.add(connInfo);
-		window.add(programbox);
-		window.add(map);
-		window.add(outputPan);
-		window.add(customMessage);
+		programSprinklers.add(connInfo);
+		programSprinklers.add(programbox);
+		programSprinklers.add(map);
+		programSprinklers.add(outputPan);
+		programSprinklers.add(customMessage);
+		
+		
+		
 		
 		JFrame frame = new JFrame("Christian's Sprinkler Pi Program!");
-		frame.setContentPane(window);
+		frame.setContentPane(tabs);
 		
 		frame.pack();
 		

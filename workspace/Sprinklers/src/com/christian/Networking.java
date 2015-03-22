@@ -64,13 +64,10 @@ public class Networking {
 			return receive;	
 	}
 	
-	public void close(){
-		try {
+	public void close() throws IOException, IOException{
+		
 			client.close();
-		} catch (IOException e) {
-			
-			System.out.println("could not close:"+ e );
-		}
+		
 	}
 	
 	

@@ -28,15 +28,27 @@ public class SprinklerEngine implements ActionListener{
 			 }
 			 catch (IOException e5){
 				 System.out.println("Could not send: "+e5);
+				 parent.write("System Output: could not send"+e5);
 			 }
 			 catch (NullPointerException npe1){
 				 System.out.println("Not connected: "+npe1);
+				 parent.write("System Output: Not Connected: "+npe1);
 			 }
 		 }
 		 
 		 if(clicked == parent.disconnect){
+			 try{
 			 net.close();
 			 net = null;
+			 }
+			 catch (IOException ioe2){
+			 System.out.println("Could not disconnect: "+ioe2);
+			 parent.write("Failed to Disconnect: " + ioe2);
+			 }
+			 catch (NullPointerException npe2){
+				 System.out.println("What? You never connected! dummuy! "+npe2);
+				 parent.write("System Output: You never connected. "+npe2);
+			 }
 			 parent.setConnStatus(" Not Connected");
 		 }
 		 
@@ -49,6 +61,7 @@ public class SprinklerEngine implements ActionListener{
 				// TODO Auto-generated catch block
 				System.out.println("O noes! something went wrong connecting to the server!"
 						+ "\n IOException"+e1);
+				parent.write("System Output: Could not connect "+ e1);
 			}
 		 }
 		 
