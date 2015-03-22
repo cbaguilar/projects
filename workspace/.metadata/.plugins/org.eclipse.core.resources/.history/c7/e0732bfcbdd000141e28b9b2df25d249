@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
 
 public class Main {
 
-	Main parent; 
+	Main parent;
 	/*Here is the place where all of the components are declred.
 	 * I may remove the declaration for the sprinkler radio buttons/list*/
 	
@@ -71,7 +71,7 @@ public class Main {
 	
 	
 	Main(){
-		ImageIcon icon = new ImageIcon("src/res/house2.png");
+		ImageIcon icon = new ImageIcon("/res/house2.png");
 		
 		SprinklerEngine engine = new SprinklerEngine(this);
 		
@@ -130,14 +130,6 @@ public class Main {
 				
 				sprinklerList.add(asprinklerPanel.get(i));
 			}
-			
-			
-		map = new JPanel();
-		
-		map.setLayout(new GridLayout());
-		map.add(sprinklerList);
-		map.add(new JLabel(icon));
-		
 		
 		BoxLayout box = new BoxLayout(window, 1);
 		/*GridLayout gl2 = new GridLayout();
@@ -166,7 +158,7 @@ public class Main {
 		
 		window.add(connInfo);
 		window.add(programbox);
-		window.add(map);
+		window.add(sprinklerList);
 		window.add(outputPan);
 		window.add(customMessage);
 		

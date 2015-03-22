@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
 
 public class Main {
 
-	Main parent; 
+	Main parent;
 	/*Here is the place where all of the components are declred.
 	 * I may remove the declaration for the sprinkler radio buttons/list*/
 	
@@ -71,7 +71,7 @@ public class Main {
 	
 	
 	Main(){
-		ImageIcon icon = new ImageIcon("src/res/house2.png");
+		ImageIcon icon = new ImageIcon("res/house2.png");
 		
 		SprinklerEngine engine = new SprinklerEngine(this);
 		

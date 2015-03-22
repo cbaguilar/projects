@@ -1,10 +1,15 @@
 package com.christian;
 
-import java.awt.GridLayout;
+
+
+
+
+
+
+
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 //import javax.swing.JOptionPane;
@@ -20,15 +25,14 @@ import javax.swing.SwingConstants;
 
 public class Main {
 
-	Main parent; 
-	/*Here is the place where all of the components are declred.
-	 * I may remove the declaration for the sprinkler radio buttons/list*/
+	Main parent;
+	
 	
 	JLabel connStatus,output,enabled;
 	JPanel window;
 	JPanel connectInfo,outputPan;
-	JPanel sprinklerList,map;
-	/*
+	JPanel sprinklerList;
+	
 		JLabel	l1,l2,l3,l4,l5,l6,
 			  	l7,l8,l9,l10,l11,l12;
 		
@@ -41,7 +45,7 @@ public class Main {
 		JRadioButton r1,r2,r3,r4,r5,r6,
 					 r7,r8,r9,r10,r11,r12;
 		
-	*/
+	
 	JTextField custInput,address,port;
 	JButton send,connect,disconnect;
 	JPanel customMessage,connInfo,programbox;
@@ -49,10 +53,6 @@ public class Main {
 	JRadioButton enabledProgram;
 	
 	ArrayList<JLabel> asprinklers;
-	ArrayList<JTextField> asprinklerTime;
-	ArrayList<JRadioButton> asprinklerEnabled;
-	ArrayList<JPanel> asprinklerPanel;
-	
 	
 	String[] programsList = {"Summer","Winter","number2"};
 	String[] sprinkLabels = { 	"One",
@@ -71,8 +71,6 @@ public class Main {
 	
 	
 	Main(){
-		ImageIcon icon = new ImageIcon("src/res/house2.png");
-		
 		SprinklerEngine engine = new SprinklerEngine(this);
 		
 		window = new JPanel();
@@ -106,38 +104,13 @@ public class Main {
 		disconnect.addActionListener(engine);
 		
 		asprinklers = new ArrayList<JLabel>();
-		asprinklerTime = new ArrayList<JTextField>();
-		asprinklerEnabled = new ArrayList<JRadioButton>();
-		asprinklerPanel = new ArrayList<JPanel>();
 		
 			for (int i = 0;i < 12;i++){
-				GridLayout g = new GridLayout();
-
-				
-				asprinklerPanel.add(new JPanel());
+				//JLabel j = new JLabel("Sprinkler "+i);
 				asprinklers.add(new JLabel((i+1)+": "+sprinkLabels[i]));
-				asprinklerTime.add(new JTextField(2));
-				asprinklerEnabled.add(new JRadioButton());
 				
-				asprinklerPanel.get(i).setLayout(g);
-				
-				asprinklerPanel.get(i).add(asprinklers.get(i));
-				asprinklerPanel.get(i).add(asprinklerTime.get(i));
-				asprinklerPanel.get(i).add(asprinklerEnabled.get(i));
-				
-				
-				
-				
-				sprinklerList.add(asprinklerPanel.get(i));
+				sprinklerList.add(asprinklers.get(i));
 			}
-			
-			
-		map = new JPanel();
-		
-		map.setLayout(new GridLayout());
-		map.add(sprinklerList);
-		map.add(new JLabel(icon));
-		
 		
 		BoxLayout box = new BoxLayout(window, 1);
 		/*GridLayout gl2 = new GridLayout();
@@ -145,8 +118,6 @@ public class Main {
 		connInfo.setLayout(gl);*/
 		window.setLayout(box);
 		sprinklerList.setLayout(new BoxLayout(sprinklerList,1));
-		
-		outputPan.setLayout(new GridLayout());
 		
 		
 		connInfo.add(address);
@@ -166,7 +137,7 @@ public class Main {
 		
 		window.add(connInfo);
 		window.add(programbox);
-		window.add(map);
+		window.add(sprinklerList);
 		window.add(outputPan);
 		window.add(customMessage);
 		

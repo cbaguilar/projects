@@ -4,7 +4,6 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 //import javax.swing.JOptionPane;
@@ -20,14 +19,14 @@ import javax.swing.SwingConstants;
 
 public class Main {
 
-	Main parent; 
+	Main parent;
 	/*Here is the place where all of the components are declred.
 	 * I may remove the declaration for the sprinkler radio buttons/list*/
 	
 	JLabel connStatus,output,enabled;
 	JPanel window;
 	JPanel connectInfo,outputPan;
-	JPanel sprinklerList,map;
+	JPanel sprinklerList;
 	/*
 		JLabel	l1,l2,l3,l4,l5,l6,
 			  	l7,l8,l9,l10,l11,l12;
@@ -71,8 +70,6 @@ public class Main {
 	
 	
 	Main(){
-		ImageIcon icon = new ImageIcon("src/res/house2.png");
-		
 		SprinklerEngine engine = new SprinklerEngine(this);
 		
 		window = new JPanel();
@@ -130,14 +127,6 @@ public class Main {
 				
 				sprinklerList.add(asprinklerPanel.get(i));
 			}
-			
-			
-		map = new JPanel();
-		
-		map.setLayout(new GridLayout());
-		map.add(sprinklerList);
-		map.add(new JLabel(icon));
-		
 		
 		BoxLayout box = new BoxLayout(window, 1);
 		/*GridLayout gl2 = new GridLayout();
@@ -166,7 +155,7 @@ public class Main {
 		
 		window.add(connInfo);
 		window.add(programbox);
-		window.add(map);
+		window.add(sprinklerList);
 		window.add(outputPan);
 		window.add(customMessage);
 		

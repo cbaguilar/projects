@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="/home/christian/Programming/projects/.git" key="GitSelectRepositoryPage.lastRepository"/>
+	<item value="0" key="org.eclipse.egit.ui.internal.clone.GitSelectWizardPageWizardSel"/>
+	<list key="CommitDialog.authorValues">
+		<item value="christian20002 &lt;christianajusd@gmail.com&gt;"/>
+	</list>
+	<list key="CommitDialog.committerValues">
+		<item value="christian20002 &lt;christianajusd@gmail.com&gt;"/>
+	</list>
+	<section name="GitImportWizard">
+	</section>
+	<section name="GitCommitMessageComponent">
+	</section>
+	<section name="org.eclipse.egit.ui.internal.push.PushResultDialog.dialogBounds">
+		<item value="650" key="DIALOG_WIDTH"/>
+		<item value="83" key="DIALOG_Y_ORIGIN"/>
+		<item value="187" key="DIALOG_X_ORIGIN"/>
+		<item value="455" key="DIALOG_HEIGHT"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+	</section>
+</section>

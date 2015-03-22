@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
 
 public class Main {
 
-	Main parent; 
+	Main parent; dsds
 	/*Here is the place where all of the components are declred.
 	 * I may remove the declaration for the sprinkler radio buttons/list*/
 	
