@@ -55,7 +55,19 @@ public class Main {
 	ArrayList<JLabel> asprinklers;
 	
 	String[] programsList = {"Summer","Winter","number2"};
-
+	String[] sprinkLabels = { 	"One",
+								"Two",
+								"three",
+								"Fower",
+								"cinco",
+								"seis",
+								"seven",
+								"octo",
+								"nova",
+								"decka",
+								"once",
+								"dozen"};
+	
 	
 	
 	Main(){
@@ -95,7 +107,7 @@ public class Main {
 		
 			for (int i = 0;i < 12;i++){
 				//JLabel j = new JLabel("Sprinkler "+i);
-				asprinklers.add(new JLabel("Sprinkler "+(i+1)));
+				asprinklers.add(new JLabel((i+1)+": "+sprinkLabels[i]));
 				
 				sprinklerList.add(asprinklers.get(i));
 			}
@@ -168,6 +180,10 @@ public class Main {
 
 	public void write(String out){
 		output.setText(out);
+	}
+	
+	public void setLabel(int l,String text){
+		asprinklers.get(l).setText(text);
 	}
 
 }
