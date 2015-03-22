@@ -23,7 +23,7 @@ public class Main {
 	Main parent; 
 	/*Here is the place where all of the components are declred.
 	 * I may remove the declaration for the sprinkler radio buttons/list*/
-	
+	//test
 	JLabel connStatus,output,enabled;
 	JPanel window;
 	JPanel connectInfo,outputPan;
