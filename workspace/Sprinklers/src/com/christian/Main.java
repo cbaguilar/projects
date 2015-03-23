@@ -16,6 +16,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import javax.swing.JTextPane;
 
 //main sprinkler class, includes GUI.
 //test
@@ -96,16 +97,12 @@ public class Main {
 		
 		JPanel help = new JPanel();
 		help.setLayout(new GridLayout());
-		/*help.add(new JLabel("Help:\n"
-							+ "\n\n"
-							+ "To configure a sprinkler program, simply select one from the "
-							+ "menu and set the times for each sprinkler (in minutes)."
-							+ "\n\nErrors:\n\n"
-							+ "Most errors you would encounter would be due to connection issues."
-							+ " If you get a 'no route to host' error, either your computer"
-							+ "or the Raspberry Pi is not connected to the network,"
-							+ " or the address is incorrect. "));
-		*/
+		JTextPane para = new JTextPane();
+		para.setText("Errors: If you get a failed to connect error, it could be one of several problems."
+			+"If you get a No Route to Host, either you or the sprinklers arenot connected to the network.");
+			
+		help.add(para);
+		
 		tabs.addTab("Program", programSprinklers);
 		tabs.addTab("Direct Control",directControl);
 		tabs.addTab("Help",help);
