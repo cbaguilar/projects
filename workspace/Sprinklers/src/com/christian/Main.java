@@ -18,6 +18,7 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
 //main sprinkler class, includes GUI.
+//test
 
 
 public class Main {
