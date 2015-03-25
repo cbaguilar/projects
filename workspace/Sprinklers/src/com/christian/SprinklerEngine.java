@@ -14,7 +14,7 @@ public class SprinklerEngine implements ActionListener{
 	SprinklerEngine(Main parent){
 		this.parent = parent;
 		System.out.println(parent);
-		System.out.println("xonstructed");
+		System.out.println("Initialized Sprinkler Engine");
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -40,6 +40,7 @@ public class SprinklerEngine implements ActionListener{
 			 try{
 			 net.close();
 			 net = null;
+			 System.out.println("Closed Connection");
 			 }
 			 catch (IOException ioe2){
 			 System.out.println("Could not disconnect: "+ioe2);
