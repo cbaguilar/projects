@@ -1,6 +1,7 @@
 package com.christian;
 
 import java.awt.GridLayout;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -269,5 +270,9 @@ public class Main {
 			  byte[] encoded = Files.readAllBytes(Paths.get(path));
 			  return new String(encoded, encoding);
 			}
+	
+
+	    
+	
 
 }
