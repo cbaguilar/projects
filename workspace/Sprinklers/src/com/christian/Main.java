@@ -1,6 +1,10 @@
 package com.christian;
 
 import java.awt.GridLayout;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -98,9 +102,15 @@ public class Main {
 		JPanel help = new JPanel();
 		help.setLayout(new GridLayout());
 		JTextPane para = new JTextPane();
-		para.setText("Errors: If you get a failed to connect error, it could be one of several problems."
-			+"If you get a No Route to Host, either you or the sprinklers arenot connected to the network.");
-			
+		try {
+		para.setContentType("text/html");
+		para.setText(readFile("src/com/christian/help.html",Charset.defaultCharset()));
+		}
+		catch (IOException e){
+			System.out.println(e);
+		}
+		
+		
 		help.add(para);
 		
 		tabs.addTab("Program", programSprinklers);
@@ -253,5 +263,11 @@ public class Main {
 	public void setLabel(int l,String text){
 		asprinklers.get(l).setText(text);
 	}
+	
+	public String readFile(String path, Charset encoding) throws IOException 
+			{
+			  byte[] encoded = Files.readAllBytes(Paths.get(path));
+			  return new String(encoded, encoding);
+			}
 
 }
