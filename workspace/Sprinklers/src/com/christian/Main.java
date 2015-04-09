@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 //import javax.swing.JOptionPane;
@@ -33,7 +34,7 @@ public class Main {
 	/*Here is the place where all of the components are declred.
 	 * I may remove the declaration for the sprinkler radio buttons/list*/
 	//test
-	JLabel connStatus,output,enabled;
+	JLabel connStatus,enabled;
 	JPanel programSprinklers,directControl;
 	JPanel connectInfo,outputPan;
 	JPanel sprinklerList,map;
@@ -55,8 +56,9 @@ public class Main {
 	JButton send,connect,disconnect,update;
 	JPanel customMessage,connInfo,programbox;
 	JComboBox<String[]> programs;
-	JRadioButton enabledProgram;
+	JCheckBox enabledProgram;
 	JTabbedPane tabs;
+	JTextPane output;
 	
 	ArrayList<JLabel> asprinklers;
 	ArrayList<JTextField> asprinklerTime;
@@ -118,14 +120,15 @@ public class Main {
 		tabs.addTab("Direct Control",directControl);
 		tabs.addTab("Help",help);
 		
+		output = new JTextPane();
+		output.setText("Output");
 		
 		connStatus = new JLabel(" Not Connected");
-		output = new JLabel("System Output: ",SwingConstants.LEFT);
 		enabled = new JLabel(" Enabled");
 		
 		programs = new JComboBox(programsList);
 		
-		enabledProgram = new JRadioButton();
+		enabledProgram = new JCheckBox();
 		
 		custInput = new JTextField(30);
 		address = new JTextField(10);
