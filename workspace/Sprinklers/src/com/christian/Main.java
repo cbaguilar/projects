@@ -31,7 +31,7 @@ import javax.swing.JTextPane;
 public class Main {
 
 	Main parent; 
-	/*Here is the place where all of the components are declred.
+	/*Here is the place where all of the components are declared.
 	 * I may remove the declaration for the sprinkler radio buttons/list*/
 	//test
 	JLabel connStatus,enabled;
