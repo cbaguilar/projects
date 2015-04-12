@@ -64,8 +64,15 @@ public class SprinklerEngine implements ActionListener{
 						+ "\n IOException"+e1);
 				parent.write("System Output: Could not connect "+ e1);
 			}
+		
+		
 		 }
 		 
+		 if (clicked == parent.update){
+				System.out.println("Printing days");
+				System.out.println(parent.getDays());
+				
+			}
 		
 		 
 		 

@@ -65,9 +65,13 @@ public class Main {
 	ArrayList<JRadioButton> asprinklerEnabled;
 	ArrayList<JPanel> asprinklerPanel;
 	
+	
+	
 	ArrayList<JLabel> conSprinklers;
 	ArrayList<JToggleButton> conToggle;
-
+	
+	ArrayList<JCheckBox> daycheck;
+	ArrayList<JPanel> daypanels; 
 	
 	String[] programsList = {"Summer","Winter","number2"};
 	String[] sprinkLabels = { 	"One",
@@ -82,6 +86,18 @@ public class Main {
 								"decka",
 								"once",
 								"dozen"};
+	
+	String[] days = {"Monday",
+					"Tuesday",
+					"Wednesday",
+					"Thursday",
+					"Friday",
+					"Saturday",
+					"Sunday"
+	};
+	
+	
+
 	
 	
 	
@@ -129,6 +145,7 @@ public class Main {
 		programs = new JComboBox(programsList);
 		
 		enabledProgram = new JCheckBox();
+
 		
 		custInput = new JTextField(30);
 		address = new JTextField(10);
@@ -154,6 +171,8 @@ public class Main {
 		asprinklerEnabled = new ArrayList<JRadioButton>();
 		asprinklerPanel = new ArrayList<JPanel>();
 		
+		
+		
 			for (int i = 0;i < 12;i++){
 				GridLayout g = new GridLayout();
 
@@ -175,12 +194,30 @@ public class Main {
 				sprinklerList.add(asprinklerPanel.get(i));
 			}
 			
+		JPanel daypanel = new JPanel();
+		daypanel.setLayout(new BoxLayout(daypanel, 1));
+		daycheck = new ArrayList<JCheckBox>();
+		daypanels = new ArrayList<JPanel>();	
+		
+		for (int i = 0; i < 7; i++){
+			GridLayout g = new GridLayout();
+			daycheck.add(new JCheckBox());
+			daypanels.add(new JPanel());
 			
 			
+			JPanel current = daypanels.get(i);
+			current.add(new JLabel(days[i]));
+			current.add(daycheck.get(i));
+			current.setLayout(g);
+			daypanel.add(current);
+		}
+		
+		
 			
 		map = new JPanel();
 		
-		map.setLayout(new GridLayout());
+		//map.setLayout();
+		map.add(daypanel);
 		map.add(sprinklerList);
 		map.add(new JLabel(icon));
 		
@@ -274,7 +311,21 @@ public class Main {
 			  return new String(encoded, encoding);
 			}
 	
-
+	public Boolean[] getDays(){
+		Boolean[] bool = {
+				daycheck.get(0).isSelected(),
+				daycheck.get(1).isSelected(),
+				daycheck.get(2).isSelected(),
+				daycheck.get(3).isSelected(),
+				daycheck.get(4).isSelected(),
+				daycheck.get(5).isSelected(),
+				daycheck.get(6).isSelected(),
+			
+							};
+		return bool;
+		
+	}
+	
 	    
 	
 
