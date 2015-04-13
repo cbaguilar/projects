@@ -143,6 +143,7 @@ public class Main {
 		enabled = new JLabel(" Enabled");
 		
 		programs = new JComboBox(programsList);
+		programs.addActionListener(engine);
 		
 		enabledProgram = new JCheckBox();
 
@@ -324,6 +325,26 @@ public class Main {
 							};
 		return bool;
 		
+	}
+	
+	public int[] getTimes(){
+		int[] times = {
+				Integer.parseInt(asprinklerTime.get(0).getText()),
+				Integer.parseInt(asprinklerTime.get(1).getText()),
+				Integer.parseInt(asprinklerTime.get(2).getText()),
+				Integer.parseInt(asprinklerTime.get(3).getText()),
+				Integer.parseInt(asprinklerTime.get(4).getText()),
+				Integer.parseInt(asprinklerTime.get(5).getText()),
+				Integer.parseInt(asprinklerTime.get(6).getText()),
+				Integer.parseInt(asprinklerTime.get(7).getText()),
+				Integer.parseInt(asprinklerTime.get(8).getText()),
+				Integer.parseInt(asprinklerTime.get(9).getText()),
+				Integer.parseInt(asprinklerTime.get(10).getText()),
+				Integer.parseInt(asprinklerTime.get(11).getText()),
+				
+		};
+		
+		return times;
 	}
 	
 	    

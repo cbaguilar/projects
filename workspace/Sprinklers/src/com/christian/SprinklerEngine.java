@@ -19,9 +19,11 @@ public class SprinklerEngine implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		 
-		 JButton clicked = (JButton) e.getSource();
+		 Object acted = e.getSource();
 		 
-		 if (clicked == parent.send){
+			 
+		 
+		 if (acted == parent.send){
 			
 			 try{
 			 net.send(parent.getText());
@@ -36,7 +38,7 @@ public class SprinklerEngine implements ActionListener{
 			 }
 		 }
 		 
-		 if(clicked == parent.disconnect){
+		 if(acted == parent.disconnect){
 			 try{
 			 net.close();
 			 net = null;
@@ -53,7 +55,7 @@ public class SprinklerEngine implements ActionListener{
 			 parent.setConnStatus(" Not Connected");
 		 }
 		 
-		 if (clicked == parent.connect){
+		 if (acted == parent.connect){
 			 try {
 				net = new Networking(parent.getAddress(),Integer.parseInt(parent.getPort()));
 				parent.setConnStatus(" Connected");
@@ -68,9 +70,16 @@ public class SprinklerEngine implements ActionListener{
 		
 		 }
 		 
-		 if (clicked == parent.update){
+		 if (acted == parent.update){
 				System.out.println("Printing days");
-				System.out.println(parent.getDays());
+				Boolean[] days = parent.getDays();
+				for (int i = 0; i< 7; i++){
+					System.out.println(days[i]);
+				}
+				int[] times = parent.getTimes();
+				for (int i = 0; i<12; i++){
+				System.out.println(times[i]);
+				}
 				
 			}
 		
