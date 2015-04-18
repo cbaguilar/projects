@@ -1,15 +1,20 @@
 package christian;
 
+import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -24,6 +29,9 @@ public class Main
   {
     this.window = new JPanel();
     JPanel content = new JPanel();
+    
+    
+    
     
     BoxLayout box = new BoxLayout(content, 1);
     content.setLayout(box);
@@ -46,13 +54,30 @@ public class Main
       JSONObject names = (JSONObject)obj;
       
       JSONArray list = (JSONArray)names.get("follows");
-      for (int i = 1; i < 20; i++)
+      Long total = (Long) names.get("_total");
+      System.out.println(total+" Followers");
+      for (int i = 0; i < 100; i++)
       {
+    	System.out.println(i);
         JSONObject follower = (JSONObject)list.get(i);
         JSONObject user = (JSONObject)follower.get("user");
         String name = (String)user.get("name");
         System.out.println(name);
+        
+        JSONObject _links = (JSONObject)user.get("_links");
+        String logo = (String)user.get("logo");
+        String bio = (String)_links.get("bio");
+        
+        System.out.println(_links);
+        
+        System.out.println(logo);
+        
+        JTextPane info = new JTextPane();
+        info.setContentType("text/html");
+        info.setText("<html> <table> <tr> <td width='100'><p><img src="+logo+" width = 50 height = 50></td></tr></table></html>");
+        
         content.add(new JLabel(name));
+        content.add(info);
       }
     }
     catch (ParseException pe)
@@ -60,7 +85,11 @@ public class Main
       System.out.println("position: " + pe);
       System.out.println(pe);
     }
-    this.window.add(content);
+    JScrollPane scroll = new JScrollPane(content);
+    scroll.setPreferredSize(new Dimension(200,500));
+   
+    
+    this.window.add(scroll);
     
     JFrame frame = new JFrame("Twitch Buff, Buffing out your twitch experience!");
     frame.setContentPane(this.window);
@@ -82,7 +111,7 @@ public class Main
     String json = "";
     try
     {
-      oracle = new URL("https://api.twitch.tv/kraken/channels/XeonSerendipity/follows/?limit=100");
+      oracle = new URL("https://api.twitch.tv/kraken/channels/XeonSerendipity/follows/?limit=200");
     }
     catch (MalformedURLException e)
     {
