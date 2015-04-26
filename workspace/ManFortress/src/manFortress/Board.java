@@ -50,28 +50,16 @@ public class Board extends JPanel implements ActionListener{
 		
 		FileIO fio = new FileIO();
 	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		
 		
 		level = new Level();
 		
-		
-		
-		
-		
+
 		
 		timer = new Timer(5,this);
 		timer.start();
+		
 		
 		
 		

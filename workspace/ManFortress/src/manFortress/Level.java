@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 
 
+import java.util.Arrays;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -145,6 +147,49 @@ public class Level {
 		return a;
 		
 		
+	}
+	
+	
+	/* Main generating algorithm
+	 * 
+	 * 
+	 * Ideas:
+	 * 
+	 * column by column
+	 * 
+	 * TODO Terrain Generating
+	 * 
+	 * 
+	 */
+	
+	
+	int[] generate(){
+		int built[] = new int[103];
+		Arrays.fill(built,0);
+		built[built.length-2] = 10;
+		built[built.length-3]= 10;
+		
+		int w = getWidth(built); //set width and height
+		int h = getHeight(built);
+		
+		int block = 0; //block index for generating
+		
+		
+		
+		
+		
+			
+		
+		
+		return built;
+	}
+	
+	int getWidth(int[] lev){
+		return lev[lev.length-2];
+	}
+	
+	int getHeight(int[] lev){
+		return lev[lev.length-3];
 	}
 	
 }
