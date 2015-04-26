@@ -110,7 +110,9 @@ public class Level {
 	}
 	
 
-	public void buildLevel(int width, int height, int[] level){
+	public void buildLevel(int[] level){
+		int width = level[level.length-2];
+		int height = level[level.length-3];
 		int y = 0;
 		int x = 0;
 		int count = 0;
@@ -138,6 +140,10 @@ public class Level {
 	}
 	
 	public int getTile(int x, int y, int[] level){
+		int width = level[level.length-2];
+		int a = (width*y)+x;
+		return a;
+		
 		
 	}
 	

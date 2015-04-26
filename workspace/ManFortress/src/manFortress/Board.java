@@ -73,12 +73,11 @@ public class Board extends JPanel implements ActionListener{
 		timer = new Timer(5,this);
 		timer.start();
 		
-		int levelwidth = level.getTestLevel()[level.getTestLevel().length - 2];
-		System.out.println(levelwidth);
-		int levelheight = level.getTestLevel()[level.getTestLevel().length - 3];
-		System.out.println(levelheight);
 		
-		level.buildLevel(levelwidth,levelheight ,level.getTestLevel());
+		
+		level.buildLevel(level.getTestLevel());
+		int[] a = level.getTestLevel();
+		System.out.println(a[level.getTile(8,13,level.getTestLevel())]);
 		
 	}
 	
