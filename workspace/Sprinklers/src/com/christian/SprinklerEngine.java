@@ -3,7 +3,10 @@ package com.christian;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import javax.swing.JButton;
 
 public class SprinklerEngine implements ActionListener{
@@ -72,14 +75,16 @@ public class SprinklerEngine implements ActionListener{
 		 
 		 if (acted == parent.update){
 				System.out.println("Printing days");
-				Boolean[] days = parent.getDays();
+				JSONArray days = parent.getDays();
 				for (int i = 0; i< 7; i++){
-					System.out.println(days[i]);
+					System.out.println(days.get(i));
 				}
-				int[] times = parent.getTimes();
-				for (int i = 0; i<12; i++){
-				System.out.println(times[i]);
-				}
+				JSONArray times = parent.getTimes();
+				
+				JSONObject program = new JSONObject();
+				
+				
+				
 				
 			}
 		

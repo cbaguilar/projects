@@ -24,6 +24,12 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 //main sprinkler class, includes GUI.
 //test
 
@@ -312,8 +318,8 @@ public class Main {
 			  return new String(encoded, encoding);
 			}
 	
-	public Boolean[] getDays(){
-		Boolean[] bool = {
+	public JSONArray getDays(){
+		/*Boolean[] bool = {
 				daycheck.get(0).isSelected(),
 				daycheck.get(1).isSelected(),
 				daycheck.get(2).isSelected(),
@@ -322,13 +328,18 @@ public class Main {
 				daycheck.get(5).isSelected(),
 				daycheck.get(6).isSelected(),
 			
-							};
-		return bool;
+							};*/
+		JSONArray daysj = new JSONArray();
+		for (int i = 0; i < 7; i++){
+			daysj.add(daycheck.get(i).isSelected());
+		}
+		
+		return daysj;
 		
 	}
 	
-	public int[] getTimes(){
-		int[] times = {
+	public JSONArray getTimes(){
+		/*int[] times = {
 				Integer.parseInt(asprinklerTime.get(0).getText()),
 				Integer.parseInt(asprinklerTime.get(1).getText()),
 				Integer.parseInt(asprinklerTime.get(2).getText()),
@@ -342,9 +353,16 @@ public class Main {
 				Integer.parseInt(asprinklerTime.get(10).getText()),
 				Integer.parseInt(asprinklerTime.get(11).getText()),
 				
-		};
+		};*/
 		
-		return times;
+		JSONArray timesj = new JSONArray();
+		for (int i=0;i < 12; i++){
+			timesj.add(asprinklerTime.get(i).getText());
+		//	System.out.println(asprinklerTime.get(i).getText());
+			//System.out.println(timesj.get(i).toString());
+		}
+		System.out.println("Current Times "+timesj.toString());
+		return timesj;
 	}
 	
 	    
