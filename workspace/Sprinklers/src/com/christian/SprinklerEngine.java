@@ -64,7 +64,7 @@ public class SprinklerEngine implements ActionListener{
 				parent.setConnStatus(" Connected");
 			} catch (IOException e1) {
 				parent.setConnStatus(" Could not connect");
-				// TODO Auto-generated catch block
+				
 				System.out.println("O noes! something went wrong connecting to the server!"
 						+ "\n IOException"+e1);
 				parent.write("System Output: Could not connect "+ e1);
@@ -81,7 +81,30 @@ public class SprinklerEngine implements ActionListener{
 				}
 				JSONArray times = parent.getTimes();
 				
+				
 				JSONObject program = new JSONObject();
+				
+				JSONObject timeobj = new JSONObject();
+				JSONObject daysobj = new JSONObject();
+				
+				program.put("times", times);
+				program.put("days", days);
+				
+				System.out.println(program.toString());
+				
+				String programstr = program.toString();
+				try{
+					net.send(programstr);
+					System.out.println(programstr);
+				}
+				catch (IOException ioe){
+					parent.write("Error Sending: "+ioe);
+					
+				}
+				catch (NullPointerException npe1){
+					 System.out.println("Not connected: "+npe1);
+					 parent.write("System Output: Not Connected: "+npe1);
+				 }
 				
 				
 				

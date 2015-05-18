@@ -54,8 +54,8 @@ public class Networking {
             //System.out.println(sizeBytes[i]);
             //}
             out.write(data.getBytes());
-            out.write("end".getBytes());
-            System.out.println("derp");   
+            //out.write("end".getBytes());
+            //System.out.println("derp");   
     }
 
 	public String receive() throws IOException, NullPointerException{
