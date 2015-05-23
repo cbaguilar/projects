@@ -56,7 +56,7 @@ public class Main
       JSONArray list = (JSONArray)names.get("follows");
       Long total = (Long) names.get("_total");
       System.out.println(total+" Followers");
-      for (int i = 0; i < 100; i++)
+      for (int i = 0; i < 20; i++)
       {
     	System.out.println(i);
         JSONObject follower = (JSONObject)list.get(i);
@@ -111,7 +111,7 @@ public class Main
     String json = "";
     try
     {
-      oracle = new URL("https://api.twitch.tv/kraken/channels/XeonSerendipity/follows/?limit=200");
+      oracle = new URL("https://api.twitch.tv/kraken/channels/XeonSerendipity/follows/?limit=20");
     }
     catch (MalformedURLException e)
     {
