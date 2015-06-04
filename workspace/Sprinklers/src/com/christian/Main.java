@@ -30,9 +30,10 @@ import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-//main sprinkler class, includes GUI.
-//test
-
+/*main sprinkler class, includes GUI.
+* test
+* 
+*/
 
 public class Main {
 
@@ -66,32 +67,43 @@ public class Main {
 	JTabbedPane tabs;
 	JTextPane output;
 	
+	/* Changeable objects, sprinkler label, time, enabled,
+	 *  and group panel, respectively
+	 */
+	
 	ArrayList<JLabel> asprinklers;
 	ArrayList<JTextField> asprinklerTime;
-	ArrayList<JRadioButton> asprinklerEnabled;
+	//ArrayList<JRadioButton> asprinklerEnabled; Instead of enabling, 0 will just be disabled
 	ArrayList<JPanel> asprinklerPanel;
 	
 	
+	// these arent used, not sure why they are here
+	//ArrayList<JLabel> conSprinklers;
+	//ArrayList<JToggleButton> conToggle;
 	
-	ArrayList<JLabel> conSprinklers;
-	ArrayList<JToggleButton> conToggle;
-	
+	/* List of the checkboxes for date/time and their panel
+	 * 
+	 */
 	ArrayList<JCheckBox> daycheck;
 	ArrayList<JPanel> daypanels; 
-	
+	//list of programs, not functional now
 	String[] programsList = {"Summer","Winter","number2"};
+	
+	//List of sprinkler names, can be changed like "garden" etc.
 	String[] sprinkLabels = { 	"One",
 								"Two",
-								"three",
-								"Fower",
-								"cinco",
-								"seis",
-								"seven",
-								"octo",
-								"nova",
-								"decka",
-								"once",
-								"dozen"};
+								"Three",
+								"Four",
+								"Five",
+								"Six",
+								"Seven",
+								"Eight",
+								"Nine",
+								"Ten",
+								"Eleven",
+								"Twelve"};
+	
+	//String for days name, (for translating in spanish? lol)
 	
 	String[] days = {"Monday",
 					"Tuesday",
@@ -175,7 +187,7 @@ public class Main {
 		
 		asprinklers = new ArrayList<JLabel>();
 		asprinklerTime = new ArrayList<JTextField>();
-		asprinklerEnabled = new ArrayList<JRadioButton>();
+		//asprinklerEnabled = new ArrayList<JRadioButton>();
 		asprinklerPanel = new ArrayList<JPanel>();
 		
 		
@@ -187,7 +199,7 @@ public class Main {
 				asprinklerPanel.add(new JPanel());
 				asprinklers.add(new JLabel((i+1)+": "+sprinkLabels[i]));
 				asprinklerTime.add(new JTextField(2));
-				asprinklerEnabled.add(new JRadioButton());
+				//asprinklerEnabled.add(new JRadioButton()); not using this as mentioned before
 				
 				asprinklerPanel.get(i).setLayout(g);
 				
@@ -303,6 +315,10 @@ public class Main {
 	public String getPort(){
 		return port.getText();
 	}
+	
+	public String getTime(){
+		return time.getText();
+	}
 
 	public void write(String out){
 		output.setText(out);
@@ -310,6 +326,23 @@ public class Main {
 	
 	public void setLabel(int l,String text){
 		asprinklers.get(l).setText(text);
+	}
+	
+	
+	
+	public void setProgram(String program) throws ParseException{
+		JSONParser parser = new JSONParser();
+		JSONObject Oprogram = (JSONObject)parser.parse(program);
+		JSONArray times = (JSONArray)Oprogram.get("times");
+		JSONArray days = (JSONArray)Oprogram.get("days");
+		for (int i = 0; i<12; i++){
+			asprinklerTime.get(i).setText((String)times.get(i));
+		}
+		
+		for (int i = 0; i<7; i++){
+			daycheck.get(i).setSelected((Boolean)days.get(i));
+		}
+		time.setText((String)Oprogram.get("start"));
 	}
 	
 	public String readFile(String path, Charset encoding) throws IOException 

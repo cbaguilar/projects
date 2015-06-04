@@ -62,16 +62,27 @@ public class SprinklerEngine implements ActionListener{
 			 try {
 				net = new Networking(parent.getAddress(),Integer.parseInt(parent.getPort()));
 				parent.setConnStatus(" Connected");
+				
+				String str = net.receive();
+				parent.setProgram(str);
+				System.out.println(str);
+				
 			} catch (IOException e1) {
 				parent.setConnStatus(" Could not connect");
 				
 				System.out.println("O noes! something went wrong connecting to the server!"
 						+ "\n IOException"+e1);
 				parent.write("System Output: Could not connect "+ e1);
+			}  catch (ParseException pe1){
+				System.out.println("There was an error in the recieved program...");
+				parent.write("Error in recived program");
+			
 			}
-		
-		
+			 
 		 }
+		
+		
+		 
 		 
 		 if (acted == parent.update){
 				System.out.println("Printing days");
@@ -81,21 +92,28 @@ public class SprinklerEngine implements ActionListener{
 				}
 				JSONArray times = parent.getTimes();
 				
-				
+				JSONObject command = new JSONObject();
 				JSONObject program = new JSONObject();
 				
 				JSONObject timeobj = new JSONObject();
 				JSONObject daysobj = new JSONObject();
 				
+				
 				program.put("times", times);
 				program.put("days", days);
+				program.put("start", parent.getTime());
 				
-				System.out.println(program.toString());
+				command.put("type", "program");
 				
-				String programstr = program.toString();
+				command.put("program", program);
+				
+				
+				System.out.println(command.toString());
+				
+				String cmdstr = command.toString();
 				try{
-					net.send(programstr);
-					System.out.println(programstr);
+					net.send(cmdstr);
+					System.out.println(cmdstr);
 				}
 				catch (IOException ioe){
 					parent.write("Error Sending: "+ioe);
