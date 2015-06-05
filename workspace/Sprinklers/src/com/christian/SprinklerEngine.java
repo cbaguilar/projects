@@ -59,6 +59,8 @@ public class SprinklerEngine implements ActionListener{
 		 }
 		 
 		 if (acted == parent.connect){
+			 
+			 if (net == null){ 
 			 try {
 				net = new Networking(parent.getAddress(),Integer.parseInt(parent.getPort()));
 				parent.setConnStatus(" Connected");
@@ -78,6 +80,7 @@ public class SprinklerEngine implements ActionListener{
 				parent.write("Error in recived program");
 			
 			}
+			 }
 			 
 		 }
 		
@@ -101,11 +104,18 @@ public class SprinklerEngine implements ActionListener{
 				
 				program.put("times", times);
 				program.put("days", days);
-				program.put("start", parent.getTime());
+				program.put("start", parent.getStartTime());
 				
 				command.put("type", "program");
 				
 				command.put("program", program);
+				
+				//
+				for (int i = 0; i<12;i++){
+					if (Integer.parseInt(((String)parent.getTimes().get(i)))>15){
+						parent.write("WARNING: TIME IS SET LONG! TIME IS OVER 15 MINUTES!!");
+					}
+				}
 				
 				
 				System.out.println(command.toString());

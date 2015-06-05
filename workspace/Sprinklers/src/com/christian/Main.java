@@ -272,9 +272,9 @@ public class Main {
 		connInfo.add(disconnect);
 		connInfo.add(connStatus);
 		
-		programbox.add(programs);
-		programbox.add(enabled);
-		programbox.add(enabledProgram);
+		//programbox.add(programs);
+		//programbox.add(enabled);
+		//programbox.add(enabledProgram);
 		programbox.add(new JLabel(" Time (24 hr format) "));
 		programbox.add(time);
 		programbox.add(new JLabel(":00  "));
@@ -371,7 +371,7 @@ public class Main {
 		return port.getText();
 	}
 	
-	public String getTime(){
+	public String getStartTime(){
 		return time.getText();
 	}
 
@@ -427,7 +427,7 @@ public class Main {
 	}
 	
 	public JSONArray getTimes(){
-		/*int[] times = {
+		/*Hint[] times = {
 				Integer.parseInt(asprinklerTime.get(0).getText()),
 				Integer.parseInt(asprinklerTime.get(1).getText()),
 				Integer.parseInt(asprinklerTime.get(2).getText()),
@@ -445,13 +445,23 @@ public class Main {
 		
 		JSONArray timesj = new JSONArray();
 		for (int i=0;i < 12; i++){
-			timesj.add(asprinklerTime.get(i).getText());
+			String t = asprinklerTime.get(i).getText();
+			if (t.equals("")){
+				timesj.add("0");
+			}
+			else{
+				timesj.add(t);
+			}
 		//	System.out.println(asprinklerTime.get(i).getText());
 			//System.out.println(timesj.get(i).toString());
 		}
-		System.out.println("Current Times "+timesj.toString());
+		//System.out.println("Current Times "+timesj.toString());
 		return timesj;
 	}
+
+
+
+	
 	
 	    
 	
