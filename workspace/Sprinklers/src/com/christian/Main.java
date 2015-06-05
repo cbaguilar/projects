@@ -1,6 +1,7 @@
 package com.christian;
 
 import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -115,18 +116,25 @@ public class Main {
 	};
 	
 	
-
+	/*Basically everything that is in the main class...
+	 * 
+	 */
 	
 	
 	
 	Main(){
+		
+		//set the tabs
 		tabs = new JTabbedPane();
 		
 
-		
+		//image of the house
 		ImageIcon icon = new ImageIcon("src/res/house2.png");
 		
-		SprinklerEngine engine = new SprinklerEngine(this);
+		//engine
+		final SprinklerEngine engine = new SprinklerEngine(this);
+		
+		//initialize main top level panels
 		
 		directControl = new JPanel();
 		programSprinklers = new JPanel();
@@ -136,6 +144,9 @@ public class Main {
 		sprinklerList = new JPanel();
 		outputPan = new JPanel();
 		
+		/*
+		 * This is info about the help page, currently stored in help.html
+		 */
 		JPanel help = new JPanel();
 		help.setLayout(new GridLayout());
 		JTextPane para = new JTextPane();
@@ -150,10 +161,14 @@ public class Main {
 		
 		help.add(para);
 		
+		//adding the little tabs..
+		
 		tabs.addTab("Program", programSprinklers);
 		tabs.addTab("Direct Control",directControl);
 		tabs.addTab("Help",help);
 		
+		
+		//start setting values of text panes
 		output = new JTextPane();
 		output.setText("Output");
 		
@@ -276,10 +291,50 @@ public class Main {
 		programSprinklers.add(outputPan);
 		programSprinklers.add(customMessage);
 		
-		
+		//I remember being dropped off at abuelitas. I cried because mama left me.
+		//I was on the bed of Tia Emma or Lupe, probably emma
+		//I cried until i fell asleep, and Abuelita made my a rolled up tortilla with nothing but
+		/* saltand lemon in it
+		 * I wandered around the big house, with its fruit trees, and loquats (i thought they were cumquats)
+		 * i had lots of oranges and little green lemons
+		 * 
+		 *There were pinecones and lots of plants. There was a chicken coop in the corner. I sometimes
+		 *helped gather eggs. Chickens would fly from side to side sometimes
+		 *I hung out with Emily, who had a pool and cable tv so we could watch spongebob
+		 *
+		 *Benjamin was my buddy cousin. I always called his name in his spanish pronounciation
+		 *We would ride scooters around his house and throw mud. We would
+		 *ride the little black truck until it broke
+		 *
+		 *
+		 *
+		 *
+		 *
+		 *
+		 */
 		
 		
 		JFrame frame = new JFrame("Christian's Sprinkler Pi Program!");
+		
+		frame.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e){
+				try {
+					
+					engine.net.close();
+					System.out.println("closing sock");
+				}
+				catch (NullPointerException npe2)  {
+					System.out.println("Could not close socket");
+					write("unable to close!! were dooomed!");
+				}
+				catch (IOException p){
+					write("Something happened");
+					System.out.println("socket closing phailde");
+				}
+				
+			}
+		});
+		
 		frame.setContentPane(tabs);
 		
 		frame.pack();
