@@ -3,10 +3,11 @@ package com.christian;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
 import javax.swing.JButton;
 
 public class SprinklerEngine implements ActionListener{
@@ -14,12 +15,19 @@ public class SprinklerEngine implements ActionListener{
 	Main parent;
 	Networking net;
 	
+	JSONObject command = new JSONObject();
+	
+	int index = 1;
+	
 	SprinklerEngine(Main parent){
 		this.parent = parent;
 		System.out.println(parent);
 		System.out.println("Initialized Sprinkler Engine");
 	}
 	
+	
+	
+	@SuppressWarnings("unchecked")
 	public void actionPerformed(ActionEvent e) {
 		 
 		 Object acted = e.getSource();
@@ -66,7 +74,7 @@ public class SprinklerEngine implements ActionListener{
 				parent.setConnStatus(" Connected");
 				
 				String str = net.receive();
-				parent.setProgram(str);
+				parent.setProgram(str, 1);
 				System.out.println(str);
 				
 			} catch (IOException e1) {
@@ -83,40 +91,70 @@ public class SprinklerEngine implements ActionListener{
 			 }
 			 
 		 }
+		 
+		 if (acted == parent.programs){
+			parent.getDays(index);
+			parent.getTimes(index);
+			parent.getStartTime(index);
+			
+			
+				try {
+					parent.setProgram(command.toString(), parent.programs.getSelectedIndex());
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+			
+			
+			}
+			 index = parent.programs.getSelectedIndex();
+			 
+		 
 		
 		
 		 
 		 
 		 if (acted == parent.update){
-				System.out.println("Printing days");
-				JSONArray days = parent.getDays();
-				for (int i = 0; i< 7; i++){
-					System.out.println(days.get(i));
+			 	command = new JSONObject();
+			 	JSONArray programList = new JSONArray();
+
+			 	
+			 	for (int k = 0; k < 3; k++){
+			 		System.out.println("Printing days");
+				 	JSONArray days = parent.getDays(k);
+
+			 		JSONArray times = parent.getTimes(k);
+				
+
+			 		JSONObject program = new JSONObject();
+				
+
+				
+			 		program.put("times", times);
+			 		program.put("days", days);
+			 		program.put("start", parent.getStartTime(k));
+			 		programList.add(program);
+			 		
+					for (int i = 0; i<12;i++){
+						try {
+								if (Integer.parseInt(((String)parent.getTimes(k).get(i)))>15){
+								}
+								parent.write("WARNING: TIME IS SET LONG! TIME IS OVER 15 MINUTES!!");
+							}
+						catch (NumberFormatException nfe) {
+							}
+						}
+					
+					
+					
+					
+				
 				}
-				JSONArray times = parent.getTimes();
-				
-				JSONObject command = new JSONObject();
-				JSONObject program = new JSONObject();
-				
-				JSONObject timeobj = new JSONObject();
-				JSONObject daysobj = new JSONObject();
-				
-				
-				program.put("times", times);
-				program.put("days", days);
-				program.put("start", parent.getStartTime());
-				
-				command.put("type", "program");
-				
-				command.put("program", program);
-				
-				//
-				for (int i = 0; i<12;i++){
-					if (Integer.parseInt(((String)parent.getTimes().get(i)))>15){
-						parent.write("WARNING: TIME IS SET LONG! TIME IS OVER 15 MINUTES!!");
-					}
-				}
-				
+			 	command.put("type", "program");
+				command.put("programlist", programList);
+
 				
 				System.out.println(command.toString());
 				

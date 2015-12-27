@@ -18,16 +18,13 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -37,7 +34,12 @@ import org.json.simple.parser.ParseException;
 */
 
 public class Main {
-
+	
+	
+	Boolean[][] allDays;
+	String[][] allTimes;
+	String[] allStartTimes;
+			
 	Main parent; 
 	/*Here is the place where all of the components are declared.
 	 * I may remove the declaration for the sprinkler radio buttons/list*/
@@ -62,10 +64,10 @@ public class Main {
 	*/
 	JTextField custInput,address,port,time;
 	JButton send,connect,disconnect,update;
-	JPanel customMessage,connInfo,programbox;
-	JComboBox<String[]> programs;
+	JPanel customMessage,connInfo,programbox,timebox;
+	JComboBox programs;
 	JCheckBox enabledProgram;
-	JTabbedPane tabs;
+	JTabbedPane tabs,diffProgs;
 	JTextPane output;
 	
 	/* Changeable objects, sprinkler label, time, enabled,
@@ -74,7 +76,6 @@ public class Main {
 	
 	ArrayList<JLabel> asprinklers;
 	ArrayList<JTextField> asprinklerTime;
-	//ArrayList<JRadioButton> asprinklerEnabled; Instead of enabling, 0 will just be disabled
 	ArrayList<JPanel> asprinklerPanel;
 	
 	
@@ -87,22 +88,22 @@ public class Main {
 	 */
 	ArrayList<JCheckBox> daycheck;
 	ArrayList<JPanel> daypanels; 
-	//list of programs, not functional now
-	String[] programsList = {"Summer","Winter","number2"};
+	//list of programs
+	String[] programsList = {"Main","Vegetables","Fruit trees"};
 	
 	//List of sprinkler names, can be changed like "garden" etc.
-	String[] sprinkLabels = { 	"One",
-								"Two",
-								"Three",
-								"Four",
-								"Five",
-								"Six",
-								"Seven",
-								"Eight",
-								"Nine",
-								"Ten",
-								"Eleven",
-								"Twelve"};
+	String[] sprinkLabels = { 	"Front Yard Island",
+								"Front Yard Grass Strip",
+								"Front Yard Grass & Shrubs",
+								"Front Yard Grass Corner",
+								"Patio Drip",
+								"Backyard Grass South Corner",
+								"Fruit Trees Drip",
+								"Backyard Grass North",
+								"East Slope",
+								"Side Grass Strip",
+								"South Slope Drip",
+								"Vegetable Garden Drip"};
 	
 	//String for days name, (for translating in spanish? lol)
 	
@@ -116,33 +117,55 @@ public class Main {
 	};
 	
 	
+	/*Direct control section, panels and buttons for direct control.
+	 * 
+	 */
+	JButton control;
+	JToggleButton onoff;
+	JComboBox<Object[]> sprinklercombo;
+	
+	
+	
+	
+	
 	/*Basically everything that is in the main class...
 	 * 
 	 */
 	
 	
 	
+	
+	
+	
+	
+	
 	Main(){
+
+		allDays = new Boolean[3][12];
+		allTimes = new String[3][12];
+		allStartTimes = new String[12];
+		
+		
+		
+		//engine
+		final SprinklerEngine engine = new SprinklerEngine(this);
+		
 		
 		//set the tabs
 		tabs = new JTabbedPane();
 		
 
-		//image of the house
-		ImageIcon icon = new ImageIcon("src/res/house2.png");
 		
-		//engine
-		final SprinklerEngine engine = new SprinklerEngine(this);
-		
-		//initialize main top level panels
+		/*
+		 * Direct control area
+		 */
 		
 		directControl = new JPanel();
-		programSprinklers = new JPanel();
-		connInfo = new JPanel();
-		customMessage = new JPanel();	
-		programbox = new JPanel();
-		sprinklerList = new JPanel();
-		outputPan = new JPanel();
+		
+
+
+		
+
 		
 		/*
 		 * This is info about the help page, currently stored in help.html
@@ -161,6 +184,27 @@ public class Main {
 		
 		help.add(para);
 		
+		
+		
+		
+		
+		//Set up main sprinkler programming panel
+		
+		
+		
+		
+		//image of the house
+		ImageIcon icon = new ImageIcon("src/res/house2.png");
+		
+		programSprinklers = new JPanel();
+		connInfo = new JPanel();
+		customMessage = new JPanel();	
+		programbox = new JPanel();
+		timebox = new JPanel();
+		sprinklerList = new JPanel();
+		outputPan = new JPanel();
+		
+		
 		//adding the little tabs..
 		
 		tabs.addTab("Program", programSprinklers);
@@ -178,15 +222,15 @@ public class Main {
 		programs = new JComboBox(programsList);
 		programs.addActionListener(engine);
 		
-		enabledProgram = new JCheckBox();
+		
 
 		
 		custInput = new JTextField(30);
 		address = new JTextField(10);
-		time = new JTextField(1);
+		time = new JTextField(2);
 		port = new JTextField(5);
 		custInput.setText("Command:");
-		address.setText("192.168.2.8");
+		address.setText("192.168.2.70");
 		port.setText("42001");
 		
 		
@@ -233,6 +277,8 @@ public class Main {
 		daycheck = new ArrayList<JCheckBox>();
 		daypanels = new ArrayList<JPanel>();	
 		
+
+		
 		for (int i = 0; i < 7; i++){
 			GridLayout g = new GridLayout();
 			daycheck.add(new JCheckBox());
@@ -245,7 +291,10 @@ public class Main {
 			current.setLayout(g);
 			daypanel.add(current);
 		}
-		
+		timebox.add(new JLabel("Start Time (24 hr format) "));
+		timebox.add(time);
+		timebox.add(new JLabel(":00  "));
+		daypanel.add(timebox);
 		
 			
 		map = new JPanel();
@@ -272,13 +321,16 @@ public class Main {
 		connInfo.add(disconnect);
 		connInfo.add(connStatus);
 		
-		//programbox.add(programs);
+		programbox.add(new JLabel("Program: "));
+		programbox.add(programs);
 		//programbox.add(enabled);
 		//programbox.add(enabledProgram);
-		programbox.add(new JLabel(" Time (24 hr format) "));
-		programbox.add(time);
-		programbox.add(new JLabel(":00  "));
+		//programbox.add(new JLabel(" Time (24 hr format) "));
+		//programbox.add(time);
+		//programbox.add(new JLabel(":00  "));
 		programbox.add(update);
+		
+
 		
 		outputPan.add(output);
 		
@@ -291,27 +343,7 @@ public class Main {
 		programSprinklers.add(outputPan);
 		programSprinklers.add(customMessage);
 		
-		//I remember being dropped off at abuelitas. I cried because mama left me.
-		//I was on the bed of Tia Emma or Lupe, probably emma
-		//I cried until i fell asleep, and Abuelita made my a rolled up tortilla with nothing but
-		/* saltand lemon in it
-		 * I wandered around the big house, with its fruit trees, and loquats (i thought they were cumquats)
-		 * i had lots of oranges and little green lemons
-		 * 
-		 *There were pinecones and lots of plants. There was a chicken coop in the corner. I sometimes
-		 *helped gather eggs. Chickens would fly from side to side sometimes
-		 *I hung out with Emily, who had a pool and cable tv so we could watch spongebob
-		 *
-		 *Benjamin was my buddy cousin. I always called his name in his spanish pronounciation
-		 *We would ride scooters around his house and throw mud. We would
-		 *ride the little black truck until it broke
-		 *
-		 *
-		 *
-		 *
-		 *
-		 *
-		 */
+		
 		
 		
 		JFrame frame = new JFrame("Christian's Sprinkler Pi Program!");
@@ -371,8 +403,22 @@ public class Main {
 		return port.getText();
 	}
 	
-	public String getStartTime(){
-		return time.getText();
+	public String getStartTime(int pro){
+		String strt = "0";
+		
+		if (pro == programs.getSelectedIndex()){
+			strt = time.getText();
+			
+		}
+		else {
+			if (allStartTimes[pro] != null){
+				strt = allStartTimes[pro];
+			}
+			else{
+				strt = "20";
+			}
+		}
+		return strt;
 	}
 
 	public void write(String out){
@@ -383,21 +429,51 @@ public class Main {
 		asprinklers.get(l).setText(text);
 	}
 	
-	
-	
-	public void setProgram(String program) throws ParseException{
+	//~(:^(l))
+	//TODO finish multiple prigram setup nao!
+	public void setProgram(String program, int programNum) throws ParseException{
 		JSONParser parser = new JSONParser();
-		JSONObject Oprogram = (JSONObject)parser.parse(program);
-		JSONArray times = (JSONArray)Oprogram.get("times");
-		JSONArray days = (JSONArray)Oprogram.get("days");
+		JSONArray times, days;
+		JSONObject Oprogram;
+		
+		try{
+		JSONObject command = (JSONObject)parser.parse(program);
+		JSONArray Iprogram = (JSONArray)command.get("programlist");
+		Oprogram = (JSONObject)Iprogram.get(programNum);
+		times = (JSONArray)Oprogram.get("times");
+		days = (JSONArray)Oprogram.get("days");
+		}
+		catch (Exception npe){
+			times = null; 
+			days = null;
+			Oprogram = null;
+		}
 		for (int i = 0; i<12; i++){
-			asprinklerTime.get(i).setText((String)times.get(i));
+			if (times !=null){
+				asprinklerTime.get(i).setText((String)times.get(i));
+			}
+			else{
+				asprinklerTime.get(i).setText((String)"0");
+			}
+			
 		}
 		
-		for (int i = 0; i<7; i++){
-			daycheck.get(i).setSelected((Boolean)days.get(i));
+		for (int i = 0; i<6; i++){
+			
+			if (days != null){
+				daycheck.get(i).setSelected(Boolean.parseBoolean((String) days.get(i)));
+				
+			}
+			else {
+				daycheck.get(i).setSelected((Boolean)false);
+			}
 		}
+		if (Oprogram != null){
 		time.setText((String)Oprogram.get("start"));
+		}
+		else{
+			time.setText((String)"0");
+		}
 	}
 	
 	public String readFile(String path, Charset encoding) throws IOException 
@@ -406,56 +482,61 @@ public class Main {
 			  return new String(encoded, encoding);
 			}
 	
-	public JSONArray getDays(){
-		/*Boolean[] bool = {
-				daycheck.get(0).isSelected(),
-				daycheck.get(1).isSelected(),
-				daycheck.get(2).isSelected(),
-				daycheck.get(3).isSelected(),
-				daycheck.get(4).isSelected(),
-				daycheck.get(5).isSelected(),
-				daycheck.get(6).isSelected(),
-			
-							};*/
+	public JSONArray getDays(int pro){
+
 		JSONArray daysj = new JSONArray();
-		for (int i = 0; i < 7; i++){
-			daysj.add(daycheck.get(i).isSelected());
-		}
+			if (programs.getSelectedIndex() == pro){
+				for (int i = 0; i < 7; i++){
+			
+					daysj.add(daycheck.get(i).isSelected());
+					allDays[pro][i] = (daycheck.get(i).isSelected());
+				}
+				
+			}
 		
+			else{
+				for (int i = 0; i < 7; i++){
+					if (allDays[pro][i] != null){
+						daysj.add(allDays[pro][i]);
+					}
+					else{
+						daysj.add("false");
+					}
+				}
+			}
 		return daysj;
 		
 	}
 	
-	public JSONArray getTimes(){
-		/*Hint[] times = {
-				Integer.parseInt(asprinklerTime.get(0).getText()),
-				Integer.parseInt(asprinklerTime.get(1).getText()),
-				Integer.parseInt(asprinklerTime.get(2).getText()),
-				Integer.parseInt(asprinklerTime.get(3).getText()),
-				Integer.parseInt(asprinklerTime.get(4).getText()),
-				Integer.parseInt(asprinklerTime.get(5).getText()),
-				Integer.parseInt(asprinklerTime.get(6).getText()),
-				Integer.parseInt(asprinklerTime.get(7).getText()),
-				Integer.parseInt(asprinklerTime.get(8).getText()),
-				Integer.parseInt(asprinklerTime.get(9).getText()),
-				Integer.parseInt(asprinklerTime.get(10).getText()),
-				Integer.parseInt(asprinklerTime.get(11).getText()),
-				
-		};*/
+	public JSONArray getTimes(int pro){
+		
 		
 		JSONArray timesj = new JSONArray();
-		for (int i=0;i < 12; i++){
-			String t = asprinklerTime.get(i).getText();
-			if (t.equals("")){
-				timesj.add("0");
-			}
-			else{
-				timesj.add(t);
-			}
-		//	System.out.println(asprinklerTime.get(i).getText());
-			//System.out.println(timesj.get(i).toString());
+		if (programs.getSelectedIndex() == pro){
+			for (int i=0;i < 12; i++){
+				String t = asprinklerTime.get(i).getText();
+				
+				if (t.equals("")){
+					timesj.add("0");
+					allTimes[pro][i] = "0";
+				}
+				else{
+					timesj.add(t);
+					allTimes[pro][i] = t;
+				}
 		}
-		//System.out.println("Current Times "+timesj.toString());
+		}
+		else{
+			for (int i=0; i < 12; i++){
+				if (allTimes[pro][i] != null){
+					timesj.add(allTimes[pro][i]);
+				}
+				else{
+					timesj.add("0");
+				}
+				
+			}
+		}
 		return timesj;
 	}
 
