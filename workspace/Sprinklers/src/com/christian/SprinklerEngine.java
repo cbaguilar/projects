@@ -67,7 +67,7 @@ public class SprinklerEngine implements ActionListener{
 		 }
 		 
 		 if (acted == parent.connect){
-			  
+			   
 			 if (net == null){ 
 			 try {
 				net = new Networking(parent.getAddress(),Integer.parseInt(parent.getPort()));
