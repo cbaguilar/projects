@@ -85,7 +85,7 @@ public class Main {
 	
 	/* List of the checkboxes for date/time and their panel
 	 * 
-	 */ 
+	 */
 	ArrayList<JCheckBox> daycheck;
 	ArrayList<JPanel> daypanels; 
 	//list of programs
