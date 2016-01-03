@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.JButton;
@@ -70,11 +71,17 @@ public class SprinklerEngine implements ActionListener{
 			  
 			 if (net == null){ 
 			 try {
+				 
+				JSONParser jp = new JSONParser();
 				net = new Networking(parent.getAddress(),Integer.parseInt(parent.getPort()));
 				parent.setConnStatus(" Connected");
 				
+				
 				String str = net.receive();
-				parent.setProgram(str, 1);
+				command.put("programlist", jp.parse(str));
+				System.out.println(command.toString());
+				parent.setProgram(command.toString(), parent.programs.getSelectedIndex());
+				
 				System.out.println(str);
 				
 			} catch (IOException e1) {

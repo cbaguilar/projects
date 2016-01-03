@@ -22,6 +22,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JTextPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -89,7 +91,7 @@ public class Main {
 	ArrayList<JCheckBox> daycheck;
 	ArrayList<JPanel> daypanels; 
 	//list of programs
-	String[] programsList = {"Main","Vegetables","Fruit trees"};
+	String[] programsList = {"Program 1","Program 2","Program 3"};
 	
 	//List of sprinkler names, can be changed like "garden" etc.
 	String[] sprinkLabels = { 	"Front Yard Island",
@@ -379,6 +381,8 @@ public class Main {
 	public static void main(String[] args) {
 		
 		
+
+		
 		@SuppressWarnings("unused")
 		Main main = new Main();
 	
@@ -442,6 +446,7 @@ public class Main {
 		Oprogram = (JSONObject)Iprogram.get(programNum);
 		times = (JSONArray)Oprogram.get("times");
 		days = (JSONArray)Oprogram.get("days");
+		
 		}
 		catch (Exception npe){
 			times = null; 
@@ -458,10 +463,11 @@ public class Main {
 			
 		}
 		
-		for (int i = 0; i<6; i++){
+		for (int i = 0; i<7; i++){
 			
 			if (days != null){
-				daycheck.get(i).setSelected(Boolean.parseBoolean((String) days.get(i)));
+				
+				daycheck.get(i).setSelected(toBoolean(days.get(i)));
 				
 			}
 			else {
@@ -476,6 +482,22 @@ public class Main {
 		}
 	}
 	
+	private boolean toBoolean(Object object) {
+			if (object.getClass().equals(String.class)){
+				return Boolean.parseBoolean((String)object);
+			}
+			if (object.getClass().equals(boolean.class)||object.getClass().equals(Boolean.class)){
+				return (boolean)object;
+			}
+			else{
+				return false;
+			}
+			
+		
+	}
+
+
+
 	public String readFile(String path, Charset encoding) throws IOException 
 			{
 			  byte[] encoded = Files.readAllBytes(Paths.get(path));
